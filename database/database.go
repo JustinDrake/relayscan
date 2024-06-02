@@ -143,7 +143,7 @@ func (s *DatabaseService) GetTopBuilders(since, until time.Time, relay string) (
 	endSlot := timeToSlot(until)
 
 	query := `SELECT extra_data, count(extra_data) as blocks FROM (
-		SELECT distinct(slot), extra_data FROM ` + TableDataAPIPayloadDelivered + ` WHERE slot >= $1 AND slot <= $2`
+		SELECT distinct(slot), extra_data FROM ` + TableDataAPIPayloadDelivered + ` WHERE value_check IS NOT NULL AND slot >= $1 AND slot <= $2`
 	if relay != "" {
 		query += ` AND relay = '` + relay + `'`
 	}
